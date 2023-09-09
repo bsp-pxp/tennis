@@ -1,14 +1,10 @@
 {
+  "scripts": {
+    "start": "node server.js"  // Replace with the appropriate start command
+  },
   "dependencies": {
     "dotenv": "^16.3.1",
     "mongoose": "^7.5.0",
     "passport": "^0.6.0"
   }
-}
-
-{
-  "scripts": {
-    "start": "node server.js"  // Replace with the appropriate start command
-  },
-  // ...
 }
