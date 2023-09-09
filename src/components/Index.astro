@@ -1,0 +1,16 @@
+---
+import { link } from '@astro/types';
+
+const title = 'Tennis Match Tracker';
+
+export default function Index() {
+  return (
+    <main>
+      <h1>{title}</h1>
+      <div class="buttons">
+        <button on:click={() => link('/new-match')}>New Match</button>
+        <button on:click={() => link('/list-matches')}>List Matches</button>
+      </div>
+    </main>
+  );
+}

@@ -38,3 +38,13 @@ const pointRoutes = require('./routes/pointRoutes');   // Import the point route
 
 
 const app
+
+// Create a new match
+app.post('/api/matches', (req, res) => {
+  // Handle creating a new match in MongoDB
+});
+
+// List matches
+app.get('/api/matches', (req, res) => {
+  // Retrieve and send a list of matches from MongoDB
+});
