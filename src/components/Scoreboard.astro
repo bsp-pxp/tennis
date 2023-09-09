@@ -1,0 +1,29 @@
+<!-- Main Scoreboard component -->
+<template>
+    <div class="scoreboard">
+      <Header {sets} {games} {currentGameScore} />
+      <PlayerSection sectionTitle="Player" {handlePoint} />
+      <PlayerSection sectionTitle="Opponent" {handlePoint} />
+    </div>
+  </template>
+  
+  <script>
+    export let sets = [0, 0];
+    export let games = [0, 0];
+    export let currentGameScore = [0, 0];
+  
+    function handlePoint(pointType) {
+      // Determine if point goes to Player or Opponent based on pointType
+      if (pointType === "winner") {
+        // Increment Player's score
+        currentGameScore[0]++;
+      } else if (pointType === "error") {
+        // Increment Opponent's score
+        currentGameScore[1]++;
+      }
+  
+      // Implement logic to check for game/set wins and update sets, games, and currentGameScore
+      // Save the result to MongoDB
+    }
+  </script>
+  
