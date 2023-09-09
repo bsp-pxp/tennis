@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node server.js"  // Replace with the appropriate start command
+    "start": "node server.js"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
