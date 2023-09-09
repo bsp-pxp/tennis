@@ -1,12 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-// Create an Express.js application
+const userRoutes = require('./routes/userRoutes');
+const gameRoutes = require('./routes/gameRoutes');
+const setRoutes = require('./routes/setRoutes');
+const matchRoutes = require('./routes/matchRoutes');
+const pointRoutes = require('./routes/pointRoutes');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // MongoDB connection
-mongoose.connect('process.env.MONGODB_URI', {
+mongoose.connect(process.env.MONGODB_URI, { // Fixed the connection string
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -19,32 +24,32 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
 // Define your routes and server logic here
 // Example: app.get('/api/scores', (req, res) => { ... });
-
-// Start the Express server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-
-const express = require('express');
-const mongoose = require('mongoose');
-const userRoutes = require('./routes/userRoutes');   // Import the user routes
-const gameRoutes = require('./routes/gameRoutes');   // Import the game routes
-const setRoutes = require('./routes/setRoutes');     // Import the set routes
-const matchRoutes = require('./routes/matchRoutes'); // Import the match routes
-const pointRoutes = require('./routes/pointRoutes');   // Import the point routes
-
-
-const app
 
 // Create a new match
 app.post('/api/matches', (req, res) => {
   // Handle creating a new match in MongoDB
+  res.send('Create a new match'); // Placeholder response
 });
 
 // List matches
 app.get('/api/matches', (req, res) => {
   // Retrieve and send a list of matches from MongoDB
+  res.send('List matches'); // Placeholder response
+});
+
+// Use the imported routes
+app.use('/api/users', userRoutes);
+app.use('/api/games', gameRoutes);
+app.use('/api/sets', setRoutes);
+app.use('/api/matches', matchRoutes);
+app.use('/api/points', pointRoutes);
+
+// Start the Express server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

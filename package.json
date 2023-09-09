@@ -1,6 +1,11 @@
 {
+  "name": "my-tennis-app",
+  "version": "1.0.0",
+  "description": "Your Node.js Application",
+  "main": "./src/pages/index.astro",  
   "scripts": {
-    "start": "node server.js"
+    "start": "node ./backend/server.js",  
+    "build": "echo 'No build step required for this Node.js application'"
   },
   "dependencies": {
     "dotenv": "^16.3.1",

@@ -2,7 +2,7 @@
 
 [build]
   command = "npm run build"  # Replace with the appropriate build command
-  publish = "dist"           # Replace with the directory containing your built files
+  publish = ".next"           # Replace with the directory containing your built files
 
 [dev]
   command = "npm run dev"    # Replace with the appropriate development command
