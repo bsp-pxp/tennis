@@ -11,7 +11,7 @@
   package = "@netlify/plugin-nextjs"  # Use the appropriate Astro-related plugin
 
 [context.production]
-  command = "npm start"       # Replace with the appropriate start command
+  command = "npm run"       # Replace with the appropriate start command
 
 [context.branch-deploy]
   command = "npm run build"  # Replace with the appropriate build command
