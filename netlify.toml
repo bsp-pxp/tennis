@@ -1,0 +1,20 @@
+# netlify.toml
+
+[build]
+  command = "npm run build"  # Replace with the appropriate build command
+  publish = "dist"           # Replace with the directory containing your built files
+
+[dev]
+  command = "npm run dev"    # Replace with the appropriate development command
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"  # Use the appropriate Astro-related plugin
+
+[context.production]
+  command = "npm start"       # Replace with the appropriate start command
+
+[context.branch-deploy]
+  command = "npm run build"  # Replace with the appropriate build command
+
+[context.deploy-preview]
+  command = "npm run build"  # Replace with the appropriate build command
