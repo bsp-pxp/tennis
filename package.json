@@ -5,3 +5,10 @@
     "passport": "^0.6.0"
   }
 }
+
+{
+  "scripts": {
+    "start": "node server.js"  // Replace with the appropriate start command
+  },
+  // ...
+}
