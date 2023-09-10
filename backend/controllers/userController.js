@@ -1,6 +1,6 @@
 // controllers/userController.js
 
-const { User } = require('../models');
+const { User } = require('../models/user');
 
 // Create a new user
 async function createUser(req, res) {
@@ -72,6 +72,7 @@ async function deleteUser(req, res) {
 }
 
 module.exports = {
+  User,
   createUser,
   getUsers,
   getUserById,

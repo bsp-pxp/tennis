@@ -1,6 +1,4 @@
-// controllers/matchController.js
-
-const { Match } = require('../models');
+const { Match } = require('../models/match');
 
 // Create a new match
 async function createMatch(req, res) {
@@ -26,10 +24,59 @@ async function getMatches(req, res) {
   }
 }
 
-// Add more CRUD functions for updating and deleting matches as needed
+// Retrieve a specific match by ID
+async function getMatchById(req, res) {
+  try {
+    const matchId = req.params.id;
+    const match = await Match.findById(matchId);
+    if (!match) {
+      res.status(404).json({ error: 'Match not found.' });
+      return;
+    }
+    res.json(match);
+  } catch (error) {
+    console.error('Error fetching match by ID:', error);
+    res.status(500).json({ error: 'Could not fetch match.' });
+  }
+}
+
+// Update a match by ID
+async function updateMatch(req, res) {
+  try {
+    const matchId = req.params.id;
+    const updatedMatchData = req.body;
+    const updatedMatch = await Match.findByIdAndUpdate(matchId, updatedMatchData, { new: true });
+    if (!updatedMatch) {
+      res.status(404).json({ error: 'Match not found.' });
+      return;
+    }
+    res.json(updatedMatch);
+  } catch (error) {
+    console.error('Error updating match:', error);
+    res.status(500).json({ error: 'Could not update match.' });
+  }
+}
+
+// Delete a match by ID
+async function deleteMatch(req, res) {
+  try {
+    const matchId = req.params.id;
+    const deletedMatch = await Match.findByIdAndRemove(matchId);
+    if (!deletedMatch) {
+      res.status(404).json({ error: 'Match not found.' });
+      return;
+    }
+    res.json(deletedMatch);
+  } catch (error) {
+    console.error('Error deleting match:', error);
+    res.status(500).json({ error: 'Could not delete match.' });
+  }
+}
 
 module.exports = {
   createMatch,
   getMatches,
-  // Add other CRUD functions here
+  getMatchById,
+  updateMatch,
+  deleteMatch,
 };

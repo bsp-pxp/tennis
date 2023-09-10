@@ -2,14 +2,14 @@
   "name": "my-tennis-app",
   "version": "1.0.0",
   "description": "Your Node.js Application",
-  "main": "./src/pages/index.astro",  
   "scripts": {
-    "start": "node ./backend/server.js",  
-    "build": "echo 'No build step required for this Node.js application'"
+    "start": "node backend/server.js",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "dev": "astro dev"
   },
   "dependencies": {
-    "dotenv": "^16.3.1",
-    "mongoose": "^7.5.0",
-    "passport": "^0.6.0"
+    "astro": "^3.0.12"
   }
 }
