@@ -1,6 +1,9 @@
 [build]
-  command = "npm run build"  # Replace with your back-end build command
-  publish = "./public"       # Adjust to match your Astro build output directory
+  command = "npm run build"  # Replace with your backend build command if needed
+  publish = "./backend"     # Adjust to match your backend directory
 
 [dev]
-  command = "npm run dev"    # Replace with your front-end development command
+  command = "npm run dev"   # Replace with your front-end development command
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"  # Use the appropriate Astro-related plugin if needed
