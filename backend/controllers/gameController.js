@@ -78,5 +78,5 @@ module.exports = {
   getGames,
   getGameById,
   updateGame,
-  deleteGame,
+  deleteGame
 };

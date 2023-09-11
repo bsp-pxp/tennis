@@ -1,0 +1,15 @@
+// pointHandling.js
+
+// Function to handle points
+function handlePoint(pointType) {
+  console.log(`Point recorded: ${pointType}`);
+}
+
+// Attach click event listeners to the buttons
+const winnerButton = document.getElementById('winnerButton');
+const errorButton = document.getElementById('errorButton');
+
+if (winnerButton && errorButton) {
+  winnerButton.addEventListener('click', () => handlePoint('winner'));
+  errorButton.addEventListener('click', () => handlePoint('error'));
+}

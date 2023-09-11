@@ -1,7 +1,20 @@
 ---
 import PlayerSection from "../components/PlayerSection.astro";
 import Header from "../components/Header.astro";
+
+
 ---
+
+<div>
+    <h1>I'm wondering</h1>
+    <button id="tgt">Click me</button>
+</div>
+  <script>
+    const tgt = document.querySelector("#tgt");
+    tgt.addEventListener("click", () => {
+      console.log("Hello, on client");
+    });
+  </script>
 
 <Header />
 <PlayerSection player="Player 1" />
@@ -11,18 +24,18 @@ import Header from "../components/Header.astro";
     // Example JavaScript logic in point.astro
 
     // Import your MongoDB functions here
-    import { updatePoint, getPointById, deletePoint,getPoints, createPoint } from '../../../backend/controllers/pointController';
-    import { updateGame, getGameById } from '../../../backend/controllers/gameController';
+    //import { updatePoint } from '../../../backend/controllers/pointController.js';
+    //import { updateGame } from '../../../backend/controllers/gameController.js';
 
 
     // Handle user interactions and MongoDB updates
-    function handlePointUpdate(player, pointType) 
-    {
+    //function handlePoint(player, pointType) 
+    //{
     // Update the score based on the pointType (e.g., "Player 1", "Player 2", "Double Fault")
-    updatePoint(player, pointType);
+    //updatePoint(player, pointType);
 
     // Update game progress if needed
-    updateGame(player);
-    }
+    //updateGame(player);
+    //}
 
 </script>

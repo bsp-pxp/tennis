@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@astrojs/check": "^0.2.0",
+    "typescript": "^5.2.2"},
+  "workspaces": [
+      "src/*"
+
+  ]
+}
