@@ -1,0 +1,28 @@
+---
+import PlayerSection from "../components/PlayerSection.astro";
+import Header from "../components/Header.astro";
+---
+
+<Header />
+<PlayerSection player="Player 1" />
+<PlayerSection player="Player 2" />
+
+<script>
+    // Example JavaScript logic in point.astro
+
+    // Import your MongoDB functions here
+    import { updatePoint, getPointById, deletePoint,getPoints, createPoint } from '../../../backend/controllers/pointController';
+    import { updateGame, getGameById } from '../../../backend/controllers/gameController';
+
+
+    // Handle user interactions and MongoDB updates
+    function handlePointUpdate(player, pointType) 
+    {
+    // Update the score based on the pointType (e.g., "Player 1", "Player 2", "Double Fault")
+    updatePoint(player, pointType);
+
+    // Update game progress if needed
+    updateGame(player);
+    }
+
+</script>

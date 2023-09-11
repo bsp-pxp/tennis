@@ -1,3 +1,3 @@
 [build]
   command = ""
-  publish = "./backend"  # Adjust to match your backend directory
+  publish = "./backend" 
