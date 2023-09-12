@@ -18,9 +18,32 @@ const { sectionName = 'Welcome, world!' } = Astro.props;
 </div>
 
 <script>
+  const url = 'http://localhost:3091/api/points';
   // Function to handle points
-  function handlePoint( player, pointResolution, pointPlayedFromCourtPosition, ballPlayedToPosition) {
+  async function handlePoint(player, pointResolution, pointPlayedFromCourtPosition, ballPlayedToPosition) {
     console.log(`Point recorded for ${player}: ${pointResolution}: ${pointPlayedFromCourtPosition}: ${ballPlayedToPosition}`);
+    
+    // Create a new point by sending a POST request to your backend API
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        pointScore: 'Your Point Score', // Provide the actual point score
+        wonByPlayer: player,
+        pointResolution,
+        pointPlayedFromCourtPosition,
+        ballPlayedToPosition,
+        game: 'Your Game ID', // Provide the actual game ID
+      }),
+    });
+
+    if (response.ok) {
+      console.log('Point created successfully');
+    } else {
+      console.error('Error creating point');
+    }
   }
 
   const winnerButtonPlayer = document.getElementById("winnerButtonPlayer");
@@ -29,10 +52,7 @@ const { sectionName = 'Welcome, world!' } = Astro.props;
   const errorButtonOpponent = document.getElementById("errorButtonOpponent");
 
   winnerButtonPlayer.addEventListener("click", () => handlePoint("Player", "Winner", "Net", "Left baseline"));
-  errorButtonPlayer.addEventListener("click", () => handlePoint("error", "Player"));
-  winnerButtonOpponent.addEventListener("click", () => handlePoint("winner", "Opponent"));
-  errorButtonOpponent.addEventListener("click", () => handlePoint("error", "Opponent"));
-
-
-    
+  errorButtonPlayer.addEventListener("click", () => handlePoint("Player", "Error", "Forehand", "Net"));
+  winnerButtonOpponent.addEventListener("click", () => handlePoint("Opponent", "Winner", "Baseline", "Net"));
+  errorButtonOpponent.addEventListener("click", () => handlePoint("Opponent", "Error", "Backhand", "Baseline"));
 </script>

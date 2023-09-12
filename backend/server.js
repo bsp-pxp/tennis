@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-
+const morgan = require('morgan'); // Import morgan
 
 const userRoutes = require('./routes/userRoutes');
 const gameRoutes = require('./routes/gameRoutes');
@@ -9,54 +9,49 @@ const setRoutes = require('./routes/setRoutes');
 const matchRoutes = require('./routes/matchRoutes');
 const pointRoutes = require('./routes/pointRoutes');
 
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
-console.log("URI:", process.env.MONGODB_URI)
-console.log("MONGODB_URI:", process.env.MONGODB_URI);
-console.log("PORT:", process.env.PORT);
+const cors = require('cors');
 
-//const path = require('path');
-//console.log(require('dotenv').config({path: path.resolve(__dirname, '../../.env')}));
-
+app.use(cors());
+// Use the imported routes
+app.use('/api/points', pointRoutes); // Use the correct route path
+// Use morgan middleware for request logging
+app.use(morgan('dev'));
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true,  useUnifiedTopology: true,});
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const db = mongoose.connection;
 
-// Handle MongoDB connection events
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-// Middleware to parse JSON request bodies
 app.use(express.json());
 
-// Define your routes and server logic here
-// Example: app.get('/api/scores', (req, res) => { ... });
-
-// Create a new match
 app.post('/api/matches', (req, res) => {
-  // Handle creating a new match in MongoDB
   res.send('Create a new match'); // Placeholder response
 });
 
-// List matches
+app.post('/api/points', (req, res) => {
+  // Handle creating a new point in MongoDB
+  res.send('Create a new point'); // Placeholder response
+});
+
 app.get('/api/matches', (req, res) => {
-  // Retrieve and send a list of matches from MongoDB
   res.send('List matches'); // Placeholder response
 });
 
-// Use the imported routes
 app.use('/api/users', userRoutes);
 app.use('/api/games', gameRoutes);
 app.use('/api/sets', setRoutes);
 app.use('/api/matches', matchRoutes);
 app.use('/api/points', pointRoutes);
 
-// Start the Express server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
