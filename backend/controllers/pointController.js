@@ -3,9 +3,11 @@ const { Point } = require('../models/point');
 // Create a new point
 async function createPoint(req, res) {
   try {
+    console.log(pointData)
     const pointData = req.body;
     const point = new Point(pointData);
     const savedPoint = await point.save();
+    console.log('Point created:', savedPoint);
     res.json(savedPoint);
   } catch (error) {
     console.error('Error creating point:', error);

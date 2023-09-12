@@ -8,6 +8,7 @@ const gameRoutes = require('./routes/gameRoutes');
 const setRoutes = require('./routes/setRoutes');
 const matchRoutes = require('./routes/matchRoutes');
 const pointRoutes = require('./routes/pointRoutes');
+const Point = require('./models/point');
 
 
 const app = express();
@@ -37,10 +38,26 @@ app.post('/api/matches', (req, res) => {
   res.send('Create a new match'); // Placeholder response
 });
 
-app.post('/api/points', (req, res) => {
-  // Handle creating a new point in MongoDB
-  res.send('Create a new point'); // Placeholder response
+app.post('/api/points', async (req, res) => {
+  try {
+    // Handle creating a new point in MongoDB
+    console.log("Received POST point");
+    
+    // Log the pointData received in the request
+    const pointData = req.body;
+    console.log('Received point data:', pointData);
+
+    const point = new Point(pointData);
+    const savedPoint = await point.save();
+    console.log('Point created successfully:', savedPoint);
+    res.status(201).json(savedPoint);
+  } catch (error) {
+    console.error('Error creating point:', error);
+    res.status(500).json({ error: 'Could not create point.' });
+  }
 });
+
+
 
 app.get('/api/matches', (req, res) => {
   res.send('List matches'); // Placeholder response
