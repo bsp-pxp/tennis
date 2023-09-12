@@ -1,31 +1,38 @@
 ---
-const sectionTitle = "Player 1";
-function handlePoint(pointType: string) {
-    console.log(`Point recorded: ${pointType}`);
-}
+// Player section.astro
+const { sectionName = 'Welcome, world!' } = Astro.props;
 ---
 
-<script>
-  function handlePoint(pointType: string) {
-    console.log(`Point recorded: ${pointType}`);
-}
-</script>
-
-<script>
-  console.log('Welcome, browser console!');
-</script>
-
-<!-- Player and Opponent sections -->
-<section class="player">
-  <h2>{sectionTitle}</h2>
+<div>
+  <h2>{sectionName}</h2>
   <div class="options">
     <div class="column">
-      <button on:click={() => handlePoint("winner")}>Winner (Forehand)</button>
-      <button on:click={() => handlePoint("error")}>Error (Forehand)</button>
+      <button id="winnerButtonPlayer">Winner (Forehand)</button>
+      <button id="errorButtonPlayer">Error (Forehand)</button>
     </div>
     <div class="column">
-      <button on:click={() => handlePoint("winner")}>Winner (Forehand)</button>
-      <button on:click={() => handlePoint("error")}>Error (Forehand)</button>
+      <button id="winnerButtonOpponent">Winner (Forehand)</button>
+      <button id="errorButtonOpponent">Error (Forehand)</button>
     </div>
   </div>
-</section>
+</div>
+
+<script>
+  // Function to handle points
+  function handlePoint( player, pointResolution, pointPlayedFromCourtPosition, ballPlayedToPosition) {
+    console.log(`Point recorded for ${player}: ${pointResolution}: ${pointPlayedFromCourtPosition}: ${ballPlayedToPosition}`);
+  }
+
+  const winnerButtonPlayer = document.getElementById("winnerButtonPlayer");
+  const errorButtonPlayer = document.getElementById("errorButtonPlayer");
+  const winnerButtonOpponent = document.getElementById("winnerButtonOpponent");
+  const errorButtonOpponent = document.getElementById("errorButtonOpponent");
+
+  winnerButtonPlayer.addEventListener("click", () => handlePoint("Player", "Winner", "Net", "Left baseline"));
+  errorButtonPlayer.addEventListener("click", () => handlePoint("error", "Player"));
+  winnerButtonOpponent.addEventListener("click", () => handlePoint("winner", "Opponent"));
+  errorButtonOpponent.addEventListener("click", () => handlePoint("error", "Opponent"));
+
+
+    
+</script>
