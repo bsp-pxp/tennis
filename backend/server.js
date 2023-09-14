@@ -9,7 +9,7 @@ const setRoutes = require('./routes/setRoutes');
 const matchRoutes = require('./routes/matchRoutes');
 const pointRoutes = require('./routes/pointRoutes');
 const Point = require('./models/point');
-
+const Match = require('./models/match'); 
 
 const app = express();
 const PORT = process.env.PORT;
@@ -34,9 +34,7 @@ db.once('open', () => {
 
 app.use(express.json());
 
-app.post('/api/matches', (req, res) => {
-  res.send('Create a new match'); // Placeholder response
-});
+
 
 app.post('/api/points', async (req, res) => {
   try {
@@ -56,6 +54,40 @@ app.post('/api/points', async (req, res) => {
     res.status(500).json({ error: 'Could not create point.' });
   }
 });
+
+
+// Modify the /api/matches endpoint to accept the user's ID
+app.post('/api/matches', async (req, res) => {
+  try {
+    // Extract data from the request body, including the user's ID
+    const { date, location, opponentName, opponentRank, weather, courtType, temperature, userId } = req.body;
+    console.log('Received match data:', req.body);
+
+    // Create a new Match document
+    const match = new Match({
+      date,
+      location,
+      opponentName,
+      opponentRank,
+      weather,
+      courtType,
+      temperature,
+      user: userId, // Assign the user's ID to the 'user' field
+    });
+
+    // Save the match document to MongoDB
+    const savedMatch = await match.save();
+    console.log('Match created successfully:', savedMatch); // Log successful creation
+
+    // Respond with a success message
+    res.status(201).json({ message: 'Match created successfully' });
+  } catch (error) {
+    console.error('Error creating match:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+
 
 
 

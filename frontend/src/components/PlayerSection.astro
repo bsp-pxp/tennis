@@ -29,7 +29,7 @@ const { currentScore = 'Welcome, world!' } = Astro.props;
   const url = 'http://localhost:3091/api/points';
   // Function to handle points
   async function handlePoint(winningPlayer, pointResolution, pointPlayedFromCourtPosition, ballPlayedToPosition) {
-    console.log(`Point recorded for ${player}: ${pointResolution}: ${pointPlayedFromCourtPosition}: ${ballPlayedToPosition}`);
+    console.log(`Point recorded for ${playerName}: ${pointResolution}: ${pointPlayedFromCourtPosition}: ${ballPlayedToPosition}`);
     
     // Create a new point by sending a POST request to your backend API
     const response = await fetch(url, {
