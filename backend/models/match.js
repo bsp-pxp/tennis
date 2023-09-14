@@ -5,7 +5,7 @@ const matchSchema = new mongoose.Schema({
   location: String,
   opponentName: { type: String, required: true },
   opponentRank: Number,
-  weather: { type: String, enum: ['dry', 'wet', 'dry & windy', 'wet & windy'] },
+  weather: { type: String, enum: ['dry', 'wet', 'dry and windy', 'wet and windy'] },
   courtType: { type: String, enum: ['indoor', 'gravel', 'grass', 'hard'] },
   temperature: Number,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },

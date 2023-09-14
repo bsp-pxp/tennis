@@ -1,10 +1,12 @@
 ---
 // Player section.astro
-const { sectionName = 'Welcome, world!' } = Astro.props;
+const { playerName = 'Welcome, world!' } = Astro.props;
+const { currentScore = 'Welcome, world!' } = Astro.props;
+
 ---
 
 <div>
-  <h2>{sectionName}</h2>
+  <h2>{playerName}</h2>
   <div class="options">
     <div class="column">
       <button id="winnerButtonPlayer">Winner (Forehand)</button>
@@ -17,10 +19,16 @@ const { sectionName = 'Welcome, world!' } = Astro.props;
   </div>
 </div>
 
+<!-- yuck hack to set up accessable variables -->
+<div id="playerName" style="display:none">{playerName}</div>
+<div id="currentScore" style="display:none">{currentScore}</div>
+
+
+
 <script>
   const url = 'http://localhost:3091/api/points';
   // Function to handle points
-  async function handlePoint(player, pointResolution, pointPlayedFromCourtPosition, ballPlayedToPosition) {
+  async function handlePoint(winningPlayer, pointResolution, pointPlayedFromCourtPosition, ballPlayedToPosition) {
     console.log(`Point recorded for ${player}: ${pointResolution}: ${pointPlayedFromCourtPosition}: ${ballPlayedToPosition}`);
     
     // Create a new point by sending a POST request to your backend API
@@ -31,7 +39,7 @@ const { sectionName = 'Welcome, world!' } = Astro.props;
       },
       body: JSON.stringify({
         pointScore: 'Your Point Score', // Provide the actual point score
-        wonByPlayer: player,
+        wonByPlayer: winningPlayer,
         pointResolution,
         pointPlayedFromCourtPosition,
         ballPlayedToPosition,
@@ -45,13 +53,14 @@ const { sectionName = 'Welcome, world!' } = Astro.props;
       console.error('Error creating point');
     }
   }
+  const WINNING_PLAYER = document.getElementById('playerName').innerText;
 
   const winnerButtonPlayer = document.getElementById("winnerButtonPlayer");
   const errorButtonPlayer = document.getElementById("errorButtonPlayer");
   const winnerButtonOpponent = document.getElementById("winnerButtonOpponent");
   const errorButtonOpponent = document.getElementById("errorButtonOpponent");
 
-  winnerButtonPlayer.addEventListener("click", () => handlePoint("Player", "Winner", "Net", "Left baseline"));
+  winnerButtonPlayer.addEventListener("click", () => handlePoint(WINNING_PLAYER, "Winner", "Net", "Left baseline"));
   errorButtonPlayer.addEventListener("click", () => handlePoint("Player", "Error", "Forehand", "Net"));
   winnerButtonOpponent.addEventListener("click", () => handlePoint("Opponent", "Winner", "Baseline", "Net"));
   errorButtonOpponent.addEventListener("click", () => handlePoint("Opponent", "Error", "Backhand", "Baseline"));

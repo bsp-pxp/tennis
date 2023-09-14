@@ -1,0 +1,107 @@
+---
+import { render } from "@astro/types";
+---
+
+<div>
+  <h1>Create a New Match</h1>
+  <form action="http://localhost:3091/api/matches" method="POST">
+    <div>
+      <label htmlFor="date">Date:</label>
+      <input type="date" id="date" name="date" required />
+    </div>
+    <div>
+      <label htmlFor="location">Location:</label>
+      <input type="text" id="location" name="location" />
+    </div>
+    <div>
+      <label htmlFor="opponentName">Opponent Name:</label>
+      <input
+        type="text"
+        id="opponentName"
+        name="opponentName"
+        required
+      />
+    </div>
+    <div>
+      <label htmlFor="opponentRank">Opponent Rank:</label>
+      <input type="number" id="opponentRank" name="opponentRank" />
+    </div>
+    <div>
+      <label htmlFor="weather">Weather:</label>
+      <select id="weather" name="weather">
+        <option value="dry">Dry</option>
+        <option value="wet">Wet</option>
+        <option value="dry &amp; windy">Dry &amp; Windy</option>
+        <option value="wet &amp; windy">Wet &amp; Windy</option>
+      </select>
+    </div>
+    <div>
+      <label htmlFor="courtType">Court Type:</label>
+      <select id="courtType" name="courtType">
+        <option value="indoor">Indoor</option>
+        <option value="gravel">Gravel</option>
+        <option value="grass">Grass</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    <div>
+      <label htmlFor="temperature">Temperature:</label>
+      <input type="number" id="temperature" name="temperature" />
+    </div>
+    <div>
+      <label htmlFor="user">User:</label>
+      <input type="text" id="user" name="user" />
+    </div>
+    <button id="createMatchButton" type="submit">Create Match</button>
+  </form>
+</div>
+
+<script>
+  const url = 'http://localhost:3091/api/matches';
+
+  async function createMatch(date, location, opponentName, opponentRank, weather, courtType, temperature, user) {
+    // Logging: Log the data being sent to the server
+    console.log('Sending data to server:', { date, location, opponentName, opponentRank, weather, courtType, temperature, user });
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        date,
+        location,
+        opponentName,
+        opponentRank,
+        weather,
+        courtType,
+        temperature,
+        user
+      }),
+    });
+
+    if (response.ok) {
+      console.log('Match created successfully');
+    } else {
+      console.error('Error creating match');
+    }
+  }
+
+  const createMatchButton = document.getElementById("createMatchButton");
+  createMatchButton.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    const date = document.getElementById("date").value;
+    const location = document.getElementById("location").value;
+    const opponentName = document.getElementById("opponentName").value;
+    const opponentRank = document.getElementById("opponentRank").value;
+    const weather = document.getElementById("weather").value;
+    const courtType = document.getElementById("courtType").value;
+    const temperature = document.getElementById("temperature").value;
+    const user = document.getElementById("user").value;
+
+    // Logging: Log the data retrieved from the form
+    console.log('Form data:', { date, location, opponentName, opponentRank, weather, courtType, temperature, user });
+
+    createMatch(date, location, opponentName, opponentRank, weather, courtType, temperature, user);
+  });
+</script>

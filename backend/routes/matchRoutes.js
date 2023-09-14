@@ -5,18 +5,18 @@ const router = express.Router();
 const matchController = require('../controllers/matchController');
 
 // Create a new match
-router.post('/matches', matchController.createMatch);
+router.post('/api/matches', matchController.createMatch);
 
 // Retrieve all matches
-router.get('/matches', matchController.getMatches);
+router.get('/api/matches', matchController.getMatches);
 
 // Retrieve a specific match by ID
-router.get('/matches/:id', matchController.getMatchById);
+router.get('/api/matches/:id', matchController.getMatchById);
 
 // Update a match by ID
-router.put('/matches/:id', matchController.updateMatch);
+router.put('/api/matches/:id', matchController.updateMatch);
 
 // Delete a match by ID
-router.delete('/matches/:id', matchController.deleteMatch);
+router.delete('/api/matches/:id', matchController.deleteMatch);
 
 module.exports = router;
