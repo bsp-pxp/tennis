@@ -8,8 +8,7 @@ const gameRoutes = require('./routes/gameRoutes');
 const setRoutes = require('./routes/setRoutes');
 const matchRoutes = require('./routes/matchRoutes');
 const pointRoutes = require('./routes/pointRoutes');
-const Point = require('./models/point');
-const Match = require('./models/match'); 
+const Match = require('./models/match'); // Import the Match model
 
 const app = express();
 const PORT = process.env.PORT;
@@ -34,32 +33,10 @@ db.once('open', () => {
 
 app.use(express.json());
 
-
-
-app.post('/api/points', async (req, res) => {
-  try {
-    // Handle creating a new point in MongoDB
-    console.log("Received POST point");
-    
-    // Log the pointData received in the request
-    const pointData = req.body;
-    console.log('Received point data:', pointData);
-
-    const point = new Point(pointData);
-    const savedPoint = await point.save();
-    console.log('Point created successfully:', savedPoint);
-    res.status(201).json(savedPoint);
-  } catch (error) {
-    console.error('Error creating point:', error);
-    res.status(500).json({ error: 'Could not create point.' });
-  }
-});
-
-
-// Modify the /api/matches endpoint to accept the user's ID
+// POST route for creating a new match
 app.post('/api/matches', async (req, res) => {
   try {
-    // Extract data from the request body, including the user's ID
+    // Extract data from the request body
     const { date, location, opponentName, opponentRank, weather, courtType, temperature, userId } = req.body;
     console.log('Received match data:', req.body);
 
@@ -88,11 +65,16 @@ app.post('/api/matches', async (req, res) => {
 });
 
 
-
-
-
-app.get('/api/matches', (req, res) => {
-  res.send('List matches'); // Placeholder response
+// GET route for listing matches
+app.get('/api/matches', async (req, res) => {
+  try {
+    // Fetch all matches from the database as plain JavaScript objects
+    const matches = await Match.find().lean();
+    res.status(200).json(matches);
+  } catch (error) {
+    console.error('Error listing matches:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 });
 
 app.use('/api/users', userRoutes);

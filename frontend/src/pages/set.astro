@@ -1,0 +1,98 @@
+---
+import { render } from "@astro/types";
+import { onCleanup, onDestroy } from "svelte";
+---
+
+<script>
+    // Function to fetch and populate the list of matches
+    async function fetchMatches() {
+        try {
+            const response = await fetch('http://localhost:3091/api/matches');
+            if (response.ok) {
+            const data = await response.json();
+            if (Array.isArray(data.matches)) {
+                matches = data.matches;
+                console.log('Matches fetched successfully:', matches);
+            } else {
+                console.error('Unexpected API response:', data);
+                matches = [];
+            }
+            } else {
+            throw new Error('Failed to fetch matches');
+            }
+        } catch (error) {
+            console.error('Error fetching matches:', error);
+            matches = [];
+        }
+    };
+
+
+  
+  // Define initial formData
+  const formData = {
+    comments: '',
+    tags: '',
+    number: 1,
+    match: '', // Store the selected match ID
+  };
+
+  let url = 'http://localhost:3091/api/sets';
+
+  async function createSet(comments, tags, number, match) {
+    // Logging: Log the data being sent to the server
+    console.log('Sending data to server:', { comments, tags, number, match });
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ comments, tags, number, match }),
+    });
+
+    if (response.ok) {
+      console.log('Set created successfully');
+    } else {
+      console.error('Error creating set');
+    }
+  }
+
+  const createSetButton = document.getElementById("createSetButton");
+  createSetButton.addEventListener("click", (e) => {
+    e.preventDefault(); // Prevent the default form submission
+    const comments = document.getElementById("comments").value;
+    const tags = document.getElementById("tags").value;
+    const number = document.getElementById("number").value;
+    const match = document.getElementById("match").value;
+
+    // Logging: Log the data retrieved from the form
+    console.log('Form data:', { comments, tags, number, match });
+
+    createSet(comments, tags, number, match);
+  });
+</script>
+
+<div>
+  <h1>Create a New Set</h1>
+  <form action="http://localhost:3091/api/sets" method="POST">
+    <div>
+      <label for="comments">Comments:</label>
+      <textarea id="comments" name="comments" />
+    </div>
+    <div>
+      <label for="tags">Tags:</label>
+      <input type="text" id="tags" name="tags" />
+    </div>
+    <div>
+      <label for="number">Set Number:</label>
+      <input type="number" id="number" name="number" />
+    </div>
+    <div>
+      <label for="match">Match:</label>
+      <select id="match" name="match" >
+        <option value="">Select a match</option>
+      </select>
+    </div>
+    <button id="createSetButton" type="submit">Create Set</button>
+  </form>
+</div>
