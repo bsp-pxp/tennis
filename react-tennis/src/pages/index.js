@@ -14,6 +14,9 @@ const Index = () => {
           <a href="/point/">point</a>
         </div>
         <div>
+          <a href="/game/">game</a>
+        </div>
+        <div>
           <a href="/match/">match</a>
         </div>
         <div>
