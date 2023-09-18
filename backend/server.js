@@ -41,11 +41,13 @@ app.use(express.json());
 app.post('/api/matches', async (req, res) => {
   try {
     // Extract data from the request body
-    const { date, location, opponentName, opponentRank, weather, courtType, temperature, userId } = req.body;
+    const { date, location, opponentName, opponentRank, weather, courtType, temperature, user } = req.body;
     console.log('Received match data:', req.body);
 
     // Log the type of the 'userId' field
-    console.log('Type of userId:', typeof userId);
+    console.log('Type of userId:', typeof user);
+
+    const userId = user;
 
     // Create a new Match document
     const match = new Match({

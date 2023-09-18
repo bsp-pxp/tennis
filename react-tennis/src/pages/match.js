@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+
+
 function MatchesPage() {
   const [matches, setMatches] = useState([]);
   const [users, setUsers] = useState([]);
@@ -31,6 +33,7 @@ function MatchesPage() {
       console.error('Error fetching matches:', error);
     }
   };
+  
 
   const fetchUsers = async () => {
     try {
@@ -62,6 +65,7 @@ function MatchesPage() {
         },
         body: JSON.stringify(newMatch),
       });
+      console.log(newMatch);
 
       if (response.ok) {
         // Match created successfully, you can fetch the updated list of matches
@@ -90,6 +94,7 @@ function MatchesPage() {
     const user = users.find((user) => user._id === userId);
     return user ? user.playerName : 'Unknown User';
   };
+  
 
   return (
     <div>
@@ -180,7 +185,7 @@ function MatchesPage() {
           >
             <option value="">Select User</option>
             {users.map((user) => (
-              <option key={user._id} value={user.playerName}>
+              <option key={user._id} value={user._id}>
                 {user.playerName}
               </option>
             ))}
@@ -194,7 +199,7 @@ function MatchesPage() {
       <ul>
         {matches.map((match) => (
           <li key={match._id}>
-                        {new Date(match.date).toLocaleDateString()} - {match.opponentName} vs. {getUserById(match.userId)}
+                        {new Date(match.date).toLocaleDateString()} - {match.opponentName} vs. {getUserById(match.user)}
           </li>
         ))}
       </ul>
